@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".subscreen.HomeFragment"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:scrollbars="none">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/silder_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="196dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
+            android:scrollbars="none"
+            app:carousel_alignment="start"
+            tools:listitem="@layout/slider_item"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="14dp"
+            android:orientation="vertical"/>
+
+
+        <RelativeLayout
+            android:id="@+id/more_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/silder_recycler_view"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh mục"
+                android:textSize="17dp"
+                android:textColor="@color/titleColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textSize="17dp"
+                android:textColor="#4611DA"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/category_progress_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/titleColor"
+            android:visibility="gone"
+            app:trackColor="@color/inactiveColor"
+            android:indeterminate="true"
+            android:layout_below="@+id/more_category"
+            android:layout_centerHorizontal="true"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/category_item"
+            app:spanCount="3"
+            tools:itemCount="6"
+            android:layout_below="@+id/category_progress_indicator"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"/>
+
+        <RelativeLayout
+            android:id="@+id/more_explore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/category_recycler_view"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nổi bật"
+                android:textSize="17dp"
+                android:textColor="@color/titleColor"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textSize="17dp"
+                android:textColor="#4611DA"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/explore_meal_progress_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/titleColor"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/more_explore"
+            app:trackColor="@color/inactiveColor"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/explore_meal_empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có bài viết nào"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/explore_meal_progress_indicator"
+            android:layout_marginVertical="40dp"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/explore_meal_recycler_view"
+            android:layout_below="@+id/explore_meal_empty_text"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/article_item"
+            tools:itemCount="4"
+            android:layout_marginHorizontal="6dp"
+            android:orientation="vertical"/>
+
+    </RelativeLayout>
+</ScrollView>

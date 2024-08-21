@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home_menu_item"
+        android:title="Trang chủ"
+        android:icon="@drawable/home_icon"/>
+    <item android:id="@+id/search_menu_item"
+        android:title="Tìm kiếm"
+        android:icon="@drawable/search_icon"/>
+    <item android:id="@+id/feedback_menu_item"
+        android:title="Đánh giá"
+        android:icon="@drawable/feebback_icon"/>
+    <item android:id="@+id/account_menu_item"
+        android:title="Hồ sơ"
+        android:icon="@drawable/account_icon"/>
+</menu>
