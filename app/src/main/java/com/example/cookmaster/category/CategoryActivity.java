@@ -54,7 +54,7 @@ public class CategoryActivity extends AppCompatActivity {
         binding.indicatorProgress.setVisibility(View.VISIBLE);
         binding.categoryList.setVisibility(View.GONE);
 
-        database.getReference("categories").addValueEventListener(new ValueEventListener() {
+        database.getReference("categories").limitToLast(6).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snap : snapshot.getChildren()) {

@@ -26,7 +26,9 @@ import com.example.cookmaster.model.Category;
 import com.google.android.material.carousel.CarouselSnapHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -134,7 +136,10 @@ public class HomeFragment extends Fragment {
         binding.exploreMealProgressIndicator.setVisibility(View.VISIBLE);
         binding.exploreMealRecyclerView.setVisibility(View.GONE);
         binding.exploreMealEmptyText.setVisibility(View.GONE);
-        database.getReference("articles").addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference reference = database.getReference("articles");
+        Query query = reference.orderByChild("star").limitToFirst(12);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() == 0) {

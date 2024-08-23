@@ -1,5 +1,7 @@
 package com.example.cookmaster.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookmaster.R;
+import com.example.cookmaster.article.ArticleByCategoryActivity;
 import com.example.cookmaster.model.Category;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -52,13 +56,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             CategoryExpandedViewHolder expandedViewHolder = (CategoryExpandedViewHolder) holder;
             expandedViewHolder.categoryName2.setText(category.getCategoryName());
             Glide.with(holder.itemView.getContext()).load(category.getCategoryImage()).into(expandedViewHolder.categoryImage2);
+            expandedViewHolder.layout2.setOnClickListener(v -> {openArticleByCategoryActivity(expandedViewHolder.itemView.getContext(), category);});
         }else{
             CategoryNormalViewHolder normalViewHolder = (CategoryNormalViewHolder) holder;
             normalViewHolder.categoryName.setText(category.getCategoryName());
             Glide.with(holder.itemView.getContext()).load(category.getCategoryImage()).into(normalViewHolder.categoryImage);
+            normalViewHolder.layout.setOnClickListener(v -> {openArticleByCategoryActivity(normalViewHolder.itemView.getContext(), category);});
         }
     }
 
+    private void openArticleByCategoryActivity(Context context, Category category) {
+        Intent intent = new Intent(context, ArticleByCategoryActivity.class);
+        intent.putExtra("categoryName", category.getCategoryName());
+        context.startActivity(intent);
+    }
 
 
     @Override
@@ -80,20 +91,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class CategoryNormalViewHolder extends RecyclerView.ViewHolder {
         ImageView categoryImage;
         TextView categoryName;
+        MaterialCardView layout;
         public CategoryNormalViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryImage = itemView.findViewById(R.id.category_item_image);
             categoryName = itemView.findViewById(R.id.category_item_title);
+            layout = itemView.findViewById(R.id.category_item_layout);
         }
     }
 
     public class CategoryExpandedViewHolder extends RecyclerView.ViewHolder {
         ImageView categoryImage2;
         TextView categoryName2;
+        MaterialCardView layout2;
         public CategoryExpandedViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryImage2 = itemView.findViewById(R.id.category_item2_image);
             categoryName2 = itemView.findViewById(R.id.category_item2_title);
+            layout2 = itemView.findViewById(R.id.category_item2_layout);
         }
     }
 }
