@@ -7,7 +7,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,10 +21,20 @@
         android:theme="@style/Theme.CookMaster"
         tools:targetApi="31">
         <activity
+            android:name=".article.ArticleByCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".category.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".article.DetailArticleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".article.ImpressArticleActivity"
+            android:exported="false" />
+        <activity
             android:name=".article.CreateArticleActivity"
-            android:exported="false" >
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -1,7 +1,11 @@
 package com.example.cookmaster.subscreen;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -14,6 +18,8 @@ import android.widget.Toast;
 import com.example.cookmaster.adapter.ArticleAdapter;
 import com.example.cookmaster.adapter.CategoryAdapter;
 import com.example.cookmaster.adapter.SliderAdapter;
+import com.example.cookmaster.article.ImpressArticleActivity;
+import com.example.cookmaster.category.CategoryActivity;
 import com.example.cookmaster.databinding.FragmentHomeBinding;
 import com.example.cookmaster.model.Article;
 import com.example.cookmaster.model.Category;
@@ -37,6 +43,7 @@ public class HomeFragment extends Fragment {
     private ArticleAdapter articleAdapter;
     private CategoryAdapter categoryAdapter;
 
+    private ActivityResultLauncher<Intent> launcher;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -54,11 +61,17 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View homeScreen = binding.getRoot();
         // Inflate the layout for this fragment
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         database = FirebaseDatabase.getInstance();
 
         categories = new ArrayList<>();
         fetchCategories();
-        categoryAdapter = new CategoryAdapter(categories);
+        categoryAdapter = new CategoryAdapter(categories, false);
         binding.categoryRecyclerView.setAdapter(categoryAdapter);
 
         sliderAdapter = new SliderAdapter();
@@ -68,10 +81,28 @@ public class HomeFragment extends Fragment {
 
         articles = new ArrayList<>();
         fetchArticles();
-        articleAdapter = new ArticleAdapter(articles);
+        articleAdapter = new ArticleAdapter(articles, true);
         binding.exploreMealRecyclerView.setAdapter(articleAdapter);
 
+        binding.moreCategoryText.setOnClickListener(v -> {
+            openCategoryActivity();
+        });
+
+        binding.exploreMealMoreText.setOnClickListener(v -> {
+            openImpressArticleActivity();
+        });
+
         return homeScreen;
+    }
+
+    private void openCategoryActivity() {
+        Intent intent = new Intent(getContext(), CategoryActivity.class);
+        launcher.launch(intent);
+    }
+
+    private void openImpressArticleActivity() {
+        Intent intent = new Intent(getContext(), ImpressArticleActivity.class);
+        launcher.launch(intent);
     }
 
     private void fetchCategories() {

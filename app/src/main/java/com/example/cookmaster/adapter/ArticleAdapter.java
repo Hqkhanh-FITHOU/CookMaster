@@ -15,32 +15,63 @@ import com.example.cookmaster.model.Article;
 
 import java.util.List;
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int FULL_VIEW = 1;
+    private static final int MINIMALIST_VIEW = 2;
     private List<Article> articles;
+    private boolean isFullView;
 
-    public ArticleAdapter(List<Article> articles) {
+    public ArticleAdapter(List<Article> articles, boolean fullView) {
         this.articles = articles;
+        this.isFullView = fullView;
     }
 
     @NonNull
     @Override
-    public ArticleAdapter.ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item, parent, false);
-        return new ArticleViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == FULL_VIEW) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item, parent, false);
+            return new ArticleFullViewHolder(view);
+        }
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item2, parent, false);
+        return new ArticleMinimalistViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArticleAdapter.ArticleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Article article = articles.get(position);
-        holder.articleTitle.setText(article.getTitle());
-        holder.articleRating.setText(article.getStar()+"");
-        holder.articleFavorit.setText("0");
-        holder.articleView.setText(article.getView()+"");
-        if(article.getImage() != null){
-            Glide.with(holder.itemView.getContext()).load(article.getImage()).into(holder.articleImage);
+        if (isFullView) {
+            ArticleFullViewHolder articleViewHolder = (ArticleFullViewHolder) holder;
+            articleViewHolder.articleTitle.setText(article.getTitle());
+            articleViewHolder.articleRating.setText(article.getStar()+"");
+            articleViewHolder.articleFavorit.setText("0");
+            articleViewHolder.articleView.setText(article.getView()+"");
+            if(article.getImage() != null){
+                Glide.with(holder.itemView.getContext()).load(article.getImage()).into(articleViewHolder.articleImage);
+            }else{
+                Glide.with(holder.itemView.getContext()).load(R.drawable.image).into(articleViewHolder.articleImage);
+            }
         }else{
-            Glide.with(holder.itemView.getContext()).load(R.drawable.image).into(holder.articleImage);
+            ArticleMinimalistViewHolder articleViewHolder = (ArticleMinimalistViewHolder) holder;
+            articleViewHolder.articleTitle2.setText(article.getTitle());
+            articleViewHolder.articleRating2.setText(article.getStar()+"");
+            articleViewHolder.articleFavorit2.setText("0");
+            articleViewHolder.articleView2.setText(article.getView()+"");
+            if(article.getImage() != null){
+                Glide.with(holder.itemView.getContext()).load(article.getImage()).into(articleViewHolder.articleImage2);
+            }else{
+                Glide.with(holder.itemView.getContext()).load(R.drawable.image).into(articleViewHolder.articleImage2);
+            }
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isFullView) {
+            return FULL_VIEW;
+        }
+        return MINIMALIST_VIEW;
     }
 
     @Override
@@ -51,19 +82,35 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         return 0;
     }
 
-    public class ArticleViewHolder extends RecyclerView.ViewHolder {
+    public class ArticleFullViewHolder extends RecyclerView.ViewHolder {
         ImageView articleImage;
         TextView articleTitle;
         TextView articleRating;
         TextView articleFavorit;
         TextView articleView;
-        public ArticleViewHolder(@NonNull View itemView) {
+        public ArticleFullViewHolder(@NonNull View itemView) {
             super(itemView);
             articleImage = itemView.findViewById(R.id.article_item_image);
             articleTitle = itemView.findViewById(R.id.article_item_title);
             articleRating = itemView.findViewById(R.id.article_item_rating);
             articleFavorit = itemView.findViewById(R.id.article_item_favorite_count);
             articleView = itemView.findViewById(R.id.article_item_view_count);
+        }
+    }
+
+    public class ArticleMinimalistViewHolder extends RecyclerView.ViewHolder {
+        ImageView articleImage2;
+        TextView articleTitle2;
+        TextView articleRating2;
+        TextView articleFavorit2;
+        TextView articleView2;
+        public ArticleMinimalistViewHolder(@NonNull View itemView) {
+            super(itemView);
+            articleImage2 = itemView.findViewById(R.id.article_item2_image);
+            articleTitle2 = itemView.findViewById(R.id.article_item2_title);
+            articleRating2 = itemView.findViewById(R.id.article_item2_rating);
+            articleFavorit2 = itemView.findViewById(R.id.article_item2_favorite_count);
+            articleView2 = itemView.findViewById(R.id.article_item2_view_count);
         }
     }
 }

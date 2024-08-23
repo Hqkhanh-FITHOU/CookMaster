@@ -18,6 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="Thêm bài viết"
+            app:titleCentered="true"
+            app:titleTextColor="@color/titleColor"
             app:menu="@menu/create_article_menu"
             app:navigationIcon="@drawable/back_icon"
             app:navigationIconTint="@color/titleColor"
