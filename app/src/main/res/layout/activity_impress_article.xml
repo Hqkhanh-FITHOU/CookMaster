@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:checked="true"
+                app:chipStrokeWidth="0dp"
                 app:chipBackgroundColor="@color/surfaceColor"
                 android:text="Nổi bật"/>
 
@@ -49,6 +50,7 @@
                 android:id="@+id/see_all_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:chipStrokeWidth="0dp"
                 style="@style/Widget.Material3.Chip.Filter"
                 app:chipBackgroundColor="@color/surfaceColor"
                 android:text="Tất cả"/>
@@ -59,6 +61,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 app:chipBackgroundColor="@color/surfaceColor"
                 android:layout_height="wrap_content"
+                app:chipStrokeWidth="0dp"
                 android:text="Xem nhiều nhất"/>
 
         </com.google.android.material.chip.ChipGroup>

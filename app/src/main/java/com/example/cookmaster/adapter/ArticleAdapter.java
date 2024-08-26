@@ -1,5 +1,7 @@
 package com.example.cookmaster.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookmaster.R;
+import com.example.cookmaster.article.DetailArticleActivity;
 import com.example.cookmaster.model.Article;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -23,6 +27,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public ArticleAdapter(List<Article> articles, boolean fullView) {
         this.articles = articles;
+        this.isFullView = fullView;
+    }
+
+    public void setArticles(List<Article> articles){
+        this.articles = articles;
+    }
+
+    public void setFullView(boolean fullView){
         this.isFullView = fullView;
     }
 
@@ -52,6 +64,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }else{
                 Glide.with(holder.itemView.getContext()).load(R.drawable.image).into(articleViewHolder.articleImage);
             }
+            articleViewHolder.itemLayout.setOnClickListener(v -> { openDetailArticleActivity(articleViewHolder.itemView.getContext(), article); });
         }else{
             ArticleMinimalistViewHolder articleViewHolder = (ArticleMinimalistViewHolder) holder;
             articleViewHolder.articleTitle2.setText(article.getTitle());
@@ -63,7 +76,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }else{
                 Glide.with(holder.itemView.getContext()).load(R.drawable.image).into(articleViewHolder.articleImage2);
             }
+            articleViewHolder.itemLayout2.setOnClickListener(v -> { openDetailArticleActivity(articleViewHolder.itemView.getContext(), article); });
         }
+    }
+
+    private void openDetailArticleActivity(Context context, Article article){
+        Intent intent = new Intent(context, DetailArticleActivity.class);
+        intent.putExtra("article", article);
+        context.startActivity(intent);
     }
 
     @Override
@@ -88,6 +108,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView articleRating;
         TextView articleFavorit;
         TextView articleView;
+        MaterialCardView itemLayout;
         public ArticleFullViewHolder(@NonNull View itemView) {
             super(itemView);
             articleImage = itemView.findViewById(R.id.article_item_image);
@@ -95,6 +116,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             articleRating = itemView.findViewById(R.id.article_item_rating);
             articleFavorit = itemView.findViewById(R.id.article_item_favorite_count);
             articleView = itemView.findViewById(R.id.article_item_view_count);
+            itemLayout = itemView.findViewById(R.id.article_item_layout);
         }
     }
 
@@ -104,6 +126,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView articleRating2;
         TextView articleFavorit2;
         TextView articleView2;
+        MaterialCardView itemLayout2;
         public ArticleMinimalistViewHolder(@NonNull View itemView) {
             super(itemView);
             articleImage2 = itemView.findViewById(R.id.article_item2_image);
@@ -111,6 +134,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             articleRating2 = itemView.findViewById(R.id.article_item2_rating);
             articleFavorit2 = itemView.findViewById(R.id.article_item2_favorite_count);
             articleView2 = itemView.findViewById(R.id.article_item2_view_count);
+            itemLayout2 = itemView.findViewById(R.id.article_item2_layout);
         }
     }
 }

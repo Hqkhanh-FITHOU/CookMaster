@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:id="@+id/category_item_layout"
+    android:id="@+id/article_item_layout"
     style="@style/Widget.Material3.CardView.Filled"
     android:backgroundTint="@color/surfaceColor"
     >

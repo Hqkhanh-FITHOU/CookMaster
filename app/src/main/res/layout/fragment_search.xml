@@ -1,14 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:scrollbars="none"
     tools:context=".subscreen.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.search.SearchBar
+            app:navigationIconTint="@color/titleColor"
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:hint="Tìm kiếm"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/surfaceColor"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Search" />
+        android:hint="Tìm kiếm"
+        app:backgroundTint="@color/surfaceColor"
+        app:layout_anchor="@id/search_bar">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recent_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/suggest_search_item"
+            android:orientation="vertical"/>
+
+    </com.google.android.material.search.SearchView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <!-- Screen content goes here. -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleLine="false"
+                app:chipSpacingVertical="0dp"
+                android:layout_alignParentTop="true"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="5dp"
+                >
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/mon_goi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipStrokeWidth="0dp"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="Món gỏi"
+                    android:textSize="12sp"
+                    app:chipBackgroundColor="@color/surfaceColor"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/mon_nau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipStrokeWidth="0dp"
+                    android:textSize="12sp"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="Món nấu"
+                    app:chipBackgroundColor="@color/surfaceColor"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/mon_hap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipStrokeWidth="0dp"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="Món hấp"
+                    android:textSize="12sp"
+                    app:chipBackgroundColor="@color/surfaceColor"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/mon_nuong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipStrokeWidth="0dp"
+                    android:textSize="12sp"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="Món nướng"
+                    app:chipBackgroundColor="@color/surfaceColor"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/mon_chien"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipStrokeWidth="0dp"
+                    android:textSize="12sp"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="Món chiên"
+                    app:chipBackgroundColor="@color/surfaceColor"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/mon_kho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipStrokeWidth="0dp"
+                    android:textSize="12sp"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:text="Món kho"
+                    app:chipBackgroundColor="@color/surfaceColor"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/chip_group"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_article"
+                    android:paddingHorizontal="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:orientation="vertical"
+                    android:scrollbars="none"
+                    app:spanCount="2"
+                    tools:itemCount="8"
+                    tools:listitem="@layout/article_item2"
+                    />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/loading_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    android:layout_marginVertical="200dp"
+                    app:indicatorColor="@color/titleColor"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/no_result_text"
+                    android:text="Không có kết quả nào"
+                    android:layout_marginVertical="200dp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

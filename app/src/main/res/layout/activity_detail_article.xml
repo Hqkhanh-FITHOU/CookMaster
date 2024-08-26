@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/surfaceColor">
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/article_detail_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/back_icon"
@@ -27,9 +28,176 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <ScrollView
+            android:layout_above="@+id/rating_button"
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Title of article"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"/>
 
+                <LinearLayout
+                    android:id="@+id/article_info"
+                    android:layout_below="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_centerHorizontal="true">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/cooking"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="user name"
+                        />
+
+                    <View
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="1dp"
+                        android:layout_height="14dp"
+                        android:layout_marginHorizontal="6dp"
+                        android:background="@color/inactiveColor"/>
+
+                    <TextView
+                        android:id="@+id/publish_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="dd-MM-yyyy"
+                        android:layout_gravity="center_vertical"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/article_info"
+                    android:id="@+id/favorite_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="22dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/view_article_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:drawablePadding="4dp"
+                        android:drawableTint="@color/inactiveColor"
+                        android:layout_marginEnd="12dp"
+                        android:drawableStart="@drawable/eye_icon"/>
+
+                    <TextView
+                        android:id="@+id/favorit_article_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:textSize="13sp"
+                        android:drawableTint="#F17474"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:drawableStart="@drawable/favorite_icon"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/intro_article_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem"
+                    android:justificationMode="inter_word"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_below="@+id/favorite_rating"/>
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:scaleType="centerCrop"
+                    android:layout_below="@+id/intro_article_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginVertical="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:src="@drawable/cooking"/>
+
+                <TextView
+                    android:id="@+id/instruct_article_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lorem"
+                    android:justificationMode="inter_word"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="22dp"
+                    android:layout_below="@+id/image"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/rating_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/titleColor">
+
+            <TextView
+                android:id="@+id/rating_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:layout_marginStart="6dp"
+                android:drawableStart="@drawable/rating_icon"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá"
+                android:layout_toRightOf="@+id/rating_text"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/back_icon"
+                android:drawableTint="@color/white"
+                android:rotationY="180"
+                android:layout_marginEnd="6dp"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@color/titleColor"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
     </RelativeLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
