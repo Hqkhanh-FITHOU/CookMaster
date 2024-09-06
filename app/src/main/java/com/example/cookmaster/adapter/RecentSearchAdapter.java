@@ -26,6 +26,10 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.listener = listener;
     }
 
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

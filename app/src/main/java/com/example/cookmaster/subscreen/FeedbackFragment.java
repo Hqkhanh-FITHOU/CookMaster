@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cookmaster.R;
+import com.example.cookmaster.databinding.FragmentFeedbackBinding;
 
 
 public class FeedbackFragment extends Fragment {
 
+    private FragmentFeedbackBinding binding;
 
     public FeedbackFragment() {
         // Required empty public constructor
@@ -29,7 +31,8 @@ public class FeedbackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View feedbackCreen = inflater.inflate(R.layout.fragment_feedback, container, false);
+        binding = FragmentFeedbackBinding.inflate(inflater, container, false);
+        View feedbackCreen = binding.getRoot();
         // Inflate the layout for this fragment
         return feedbackCreen;
     }

@@ -50,9 +50,21 @@
                     android:gravity="center"
                     android:layout_centerHorizontal="true"/>
 
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="category"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14sp"
+                    android:background="@color/light_green"
+                    android:paddingHorizontal="6dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/title"/>
+
                 <LinearLayout
                     android:id="@+id/article_info"
-                    android:layout_below="@+id/title"
+                    android:layout_below="@+id/category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -116,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:text="100"
                         android:textSize="13sp"
-                        android:drawableTint="#F17474"
+                        android:drawableTint="@color/inactiveColor"
                         android:drawablePadding="4dp"
                         android:gravity="center"
                         android:drawableStart="@drawable/favorite_icon"/>

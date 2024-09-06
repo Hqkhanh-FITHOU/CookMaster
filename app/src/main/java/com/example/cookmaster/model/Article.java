@@ -152,4 +152,6 @@ public class Article implements Serializable {
         String[] categories = {"Món gỏi","Món nấu","Món hấp","Món nướng","Món chiên","Món kho"};
         return categories;
     }
+
+
 }

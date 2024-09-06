@@ -48,7 +48,7 @@ public class ArticleByCategoryActivity extends AppCompatActivity {
 
         articles = new ArrayList<>();
         fetchArticles();
-        articleAdapter = new ArticleAdapter(articles, true);
+        articleAdapter = new ArticleAdapter(articles, ArticleAdapter.FULL_VIEW);
         binding.articleList.setAdapter(articleAdapter);
 
     }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-public class ProgressViewDialog  {
+public class ProgressViewDialog {
 
     private Dialog dialog;
     private TextView progressMessage;

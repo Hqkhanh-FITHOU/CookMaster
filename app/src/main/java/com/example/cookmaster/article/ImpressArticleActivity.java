@@ -52,7 +52,7 @@ public class ImpressArticleActivity extends AppCompatActivity {
 
         impressingArticlesList = new ArrayList<>();
         fetchArticlesList();
-        articleAdapter = new ArticleAdapter(impressingArticlesList, false);
+        articleAdapter = new ArticleAdapter(impressingArticlesList, ArticleAdapter.MINIMALIST_VIEW);
         binding.articleList.setAdapter(articleAdapter);
 
         binding.chipGroup.setOnCheckedStateChangeListener((chipGroup, list) -> {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -83,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         articles = new ArrayList<>();
         fetchArticles();
-        articleAdapter = new ArticleAdapter(articles, true);
+        articleAdapter = new ArticleAdapter(articles, ArticleAdapter.FULL_VIEW);
         binding.exploreMealRecyclerView.setAdapter(articleAdapter);
 
         binding.moreCategoryText.setOnClickListener(v -> {
@@ -110,8 +111,8 @@ public class HomeFragment extends Fragment {
     private void fetchCategories() {
         binding.categoryProgressIndicator.setVisibility(View.VISIBLE);
         binding.categoryRecyclerView.setVisibility(View.GONE);
-
-        database.getReference("categories").addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = database.getReference().child("categories");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snap : snapshot.getChildren()) {
@@ -149,8 +150,7 @@ public class HomeFragment extends Fragment {
                 }else{
                     for (DataSnapshot snap : snapshot.getChildren()) {
                         Article article = snap.getValue(Article.class);
-                        assert article != null;
-                        if(article.isPublished()){
+                        if(article != null && article.isPublished()){
                             articles.add(article);
                         }
                     }
@@ -172,9 +172,12 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
+
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onPause() {
+        super.onPause();
+//        Toast.makeText(getContext(), "HomeFragment paused", Toast.LENGTH_SHORT).show();
     }
 }

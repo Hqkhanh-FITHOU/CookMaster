@@ -37,6 +37,16 @@
                     android:textAppearance="?attr/textAppearanceTitleMedium"/>
 
                 <TextView
+                    android:id="@+id/article_item_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="category"
+                    android:background="@color/light_green"
+                    android:paddingHorizontal="6dp"
+                    android:layout_marginStart="3dp"
+                    android:gravity="center"/>
+
+                <TextView
                     android:id="@+id/article_item_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +68,8 @@
                 android:drawableTop="@drawable/eye_icon"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:drawableTint="#5B5C57"
+
+                android:drawableTint="@color/inactiveColor"
                 android:textSize="16sp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_toLeftOf="@+id/article_item_favorite_count"/>
@@ -69,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="34"
-                android:drawableTint="#F17474"
+                android:drawableTint="@color/inactiveColor"
                 android:textSize="16sp"
                 android:drawableTop="@drawable/favorite_icon"
                 android:layout_alignParentEnd="true"

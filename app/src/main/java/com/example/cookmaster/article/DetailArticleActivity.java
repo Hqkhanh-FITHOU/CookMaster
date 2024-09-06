@@ -15,6 +15,9 @@ import com.example.cookmaster.databinding.ActivityDetailArticleBinding;
 import com.example.cookmaster.model.Article;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class DetailArticleActivity extends AppCompatActivity {
     private ActivityDetailArticleBinding binding;
     private Article article;
@@ -51,6 +54,9 @@ public class DetailArticleActivity extends AppCompatActivity {
             Glide.with(this).load(article.getImage()).into(binding.image);
             binding.viewArticleText.setText(article.getView()+"");
             binding.ratingText.setText(article.getStar()+"");
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            binding.publishDate.setText(dateFormat.format(article.getPublishedAt()));
         }
     }
 

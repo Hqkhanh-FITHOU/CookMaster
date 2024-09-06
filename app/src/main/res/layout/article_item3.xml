@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:id="@+id/article_item3_layout"
+    style="@style/Widget.Material3.CardView.Filled"
+    android:backgroundTint="@color/surfaceColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/article_item3_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/cooking"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="6dp">
+            <TextView
+                android:id="@+id/article_item3_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title of the article"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                />
+            <TextView
+                android:id="@+id/article_item3_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="category"
+                android:background="@color/light_green"
+                android:paddingHorizontal="6dp"
+                android:layout_marginStart="3dp"
+                android:gravity="center"
+                android:layout_below="@+id/article_item3_title"/>
+
+            <LinearLayout
+                android:id="@+id/ln2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/article_item3_category">
+
+
+                <TextView
+                    android:id="@+id/article_item3_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:drawableStart="@drawable/rating_icon"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:drawableTint="#268C0A"
+                    android:textSize="16sp"
+                    android:drawablePadding="4dp"
+                    android:layout_toLeftOf="@+id/favorite_count"/>
+
+                <TextView
+                    android:id="@+id/article_item3_view_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:drawableStart="@drawable/eye_icon"
+                    android:drawablePadding="4dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:drawableTint="@color/inactiveColor"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_toLeftOf="@+id/article_item3_favorite_count"/>
+
+                <TextView
+                    android:id="@+id/article_item3_favorite_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="34"
+                    android:drawablePadding="4dp"
+                    android:drawableTint="@color/inactiveColor"
+                    android:textSize="16sp"
+                    android:drawableStart="@drawable/favorite_icon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+                />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_button"
+                android:text="Chỉnh sửa"
+                android:layout_marginTop="8dp"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/titleColor"
+                android:layout_below="@+id/ln2"/>
+
+            <Button
+                android:layout_below="@+id/edit_button"
+                android:id="@+id/delete_button"
+                android:text="Xóa"
+                android:backgroundTint="@color/errorSurface"
+                style="@style/Widget.Material3.Button.IconButton.Outlined"
+                android:layout_width="match_parent"
+                app:strokeColor="@color/errorInput"
+                android:textColor="@color/errorInput"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

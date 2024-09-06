@@ -54,4 +54,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
+    public static void finishActivity() {
+
+    }
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import com.example.cookmaster.R;
 import com.example.cookmaster.adapter.ArticleAdapter;
@@ -66,7 +67,7 @@ public class SearchFragment extends Fragment {
 
         articles = new ArrayList<>();
         fetchArticles();
-        adapter = new ArticleAdapter(articles, false);
+        adapter = new ArticleAdapter(articles, ArticleAdapter.MINIMALIST_VIEW);
         binding.listArticle.setAdapter(adapter);
 
         binding.chipGroup.setOnCheckedStateChangeListener((chipGroup, list) -> onChipStatusChanged(list, searchScreen));
@@ -74,18 +75,19 @@ public class SearchFragment extends Fragment {
 
         binding.searchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
 
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                addRecentSearch(binding.searchView.getText().toString().trim());
+                fetchArticlesWithQuery(binding.searchView.getText().toString().trim());
+            }
             binding.searchBar.setText(binding.searchView.getText());
             binding.searchView.hide();
-
-            fetchArticlesWithQuery(binding.searchView.getText().toString().trim());
-
             return true;
         });
 
-        binding.searchView.getToolbar().setNavigationOnClickListener(v -> {
-            binding.searchBar.setText(binding.searchView.getText());
-            binding.searchView.hide();
-        });
+//        binding.searchView.getToolbar().setNavigationOnClickListener(v -> {
+//            binding.searchBar.setText(binding.searchView.getText());
+//            binding.searchView.hide();
+//        });
 
         return searchScreen;
     }
@@ -194,8 +196,56 @@ public class SearchFragment extends Fragment {
     }
 
     private void fetchArticlesWithQuery(String searchQuery){
-        //handles searching logic here
-        //including logic of adding recent search
+        //TODO: handles searching logic here
+        articles.clear();
+        //get all article from database
+        DatabaseReference reference = database.getReference("articles");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getChildrenCount() > 0){
+                    for(DataSnapshot snap : snapshot.getChildren()){
+                        Article article = snap.getValue(Article.class);
+                        if (article.isPublished() && article.getTitle().toLowerCase().contains(searchQuery.toLowerCase())){
+                            articles.add(article);
+                        }
+                    }
+                    if(articles.isEmpty()){
+                        binding.loading.setVisibility(View.GONE);
+                        binding.noResultText.setVisibility(View.VISIBLE);
+                        binding.listArticle.setVisibility(View.GONE);
+                    } else {
+                        adapter.setArticles(articles);
+                        adapter.notifyDataSetChanged();
+                        binding.loading.setVisibility(View.GONE);
+                        binding.noResultText.setVisibility(View.GONE);
+                        binding.listArticle.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    binding.loading.setVisibility(View.GONE);
+                    binding.noResultText.setVisibility(View.VISIBLE);
+                    binding.listArticle.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //filter article with query
+    }
+
+    private void addRecentSearch(String query){
+        //TODO: handles adding recent search logic here
+
+        //check if recent search already exists
+        if(!recentSearch.get(0).equalsIgnoreCase(query) && !query.isEmpty()){
+            recentSearch.add(0,query); //add recent search
+        }
+        recentSearchAdapter.setList(recentSearch);
+        recentSearchAdapter.notifyDataSetChanged();
+
     }
 
 
