@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
         if (username.isEmpty()){
-            binding.usernameTextfield.setError("Xác nhận mật khẩu");
+            binding.usernameTextfield.setError("Nhập tên người dùng");
             valid = false;
         }
         if (confirmPassword.isEmpty()){

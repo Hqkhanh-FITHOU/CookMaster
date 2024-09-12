@@ -2,6 +2,9 @@ package com.example.cookmaster.authenticate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
@@ -21,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
@@ -29,16 +35,79 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
     private String email, password;
+
+    private SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+        sessionManager = new SessionManager(this);
 
         binding.loginButton.setOnClickListener(v -> login());
         binding.registerTextview.setOnClickListener(v -> openRegisterActivity());
         binding.forgotPasswordTextview.setOnClickListener(v -> openForgotPasswordActivity());
+        onTextChanged();
+
+
+    }
+
+    private void onTextChanged() {
+        binding.emailInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.emailTextfield.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        binding.passwordInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.passwordTextfield.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+
+
+    private void checkLoginState() {
+        if(sessionManager.isLogin()) {
+            mAuth.signInWithEmailAndPassword(sessionManager.getEmail(), sessionManager.getPassword()).addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
+                    Log.i("Login", "Login successfully");
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }).addOnFailureListener(e -> {
+                Log.i("Login", e.getMessage());
+            });
+        }else {
+            Log.i("Login", "login failed");
+            Toast.makeText(this, "login failed", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void openForgotPasswordActivity() {
@@ -66,10 +135,10 @@ public class LoginActivity extends AppCompatActivity {
         } else {binding.emailTextfield.setError(null);}
         //check password
         if(password.isEmpty()){
-            binding.emailTextfield.setError("Nhập mật khẩu");
+            binding.passwordTextfield.setError("Nhập mật khẩu");
             valid = false;
         }else if(password.length() < 8){
-            binding.emailTextfield.setError("Mật khẩu phải có ít nhất 8 ký tự");
+            binding.passwordTextfield.setError("Mật khẩu phải có ít nhất 8 ký tự");
             valid = false;
         } else {binding.emailTextfield.setError(null);}
         return valid;
@@ -80,16 +149,21 @@ public class LoginActivity extends AppCompatActivity {
             binding.loginButton.setVisibility(View.INVISIBLE);
             binding.progressCircular.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                binding.loginButton.setVisibility(View.VISIBLE);
-                                binding.progressCircular.setVisibility(View.GONE);
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()){
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            binding.loginButton.setVisibility(View.VISIBLE);
+                            binding.progressCircular.setVisibility(View.GONE);
+
+                            sessionManager.saveLoginInfo(email, password);
+                            sessionManager.setLoginState(true);
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
+                                Toast.makeText(this, "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                             }
                         }
                     })
@@ -101,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
 
 
     @Override

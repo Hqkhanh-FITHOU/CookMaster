@@ -20,6 +20,7 @@ import com.example.cookmaster.article.MyArticleActivity;
 import com.example.cookmaster.authenticate.ChangePasswordActivity;
 import com.example.cookmaster.authenticate.EditProfileActivity;
 import com.example.cookmaster.authenticate.LoginActivity;
+import com.example.cookmaster.authenticate.SessionManager;
 import com.example.cookmaster.databinding.FragmentProfileBinding;
 import com.example.cookmaster.model.Option;
 import com.google.firebase.auth.FirebaseAuth;
@@ -109,6 +110,8 @@ public class ProfileFragment extends Fragment {
                 case ProfileOptionAdapter.LOGOUT_OPTION:{
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
+                    FirebaseAuth.getInstance().signOut();
+                    new SessionManager(getActivity()).setLoginState(false);
                     getActivity().finish();
                     break;
                 }
